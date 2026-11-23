@@ -1,4 +1,4 @@
-# streed3d
+# dheeraj bhai · BHP School (repo: streed3d)
 
 Google Street View in a **fullscreen webview**. It opens directly in a 360°
 panorama at a chosen spot — no 2D map view, no map UI, no API key required.
@@ -56,9 +56,13 @@ set `cleanMode: false` to disable it.
 
 ## Controls
 
-Everything inside the frame is Google's Street View UI: drag/swipe to look
-around, pinch/scroll to zoom, and tap the on-image arrows to walk to the next
-panorama. The thin header only shows the place name and a fullscreen button.
+Use the **joystick** at the bottom: left/right turns the view, up/down walks
+forward/back along the current heading. The Google arrows and on-image text are
+visually hidden by `cleanMode` corner/edge covers; the app's own header reads
+"dheeraj bhai" and "BHP School".
+
+Works in portrait and landscape; in landscape the joystick moves to the corner
+and the header compacts.
 
 ## Deploy to GitHub Pages
 

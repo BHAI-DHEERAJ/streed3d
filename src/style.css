@@ -68,6 +68,57 @@ body { overscroll-behavior: none; }
   height: 130px;
   background: linear-gradient(to bottom right, rgba(11, 15, 20, 0.98) 0%, rgba(11, 15, 20, 0.9) 58%, rgba(11, 15, 20, 0) 100%);
 }
+/* Google's rotate control sits at the right edge on phones. */
+.clean .clean-cover-side {
+  position: absolute;
+  right: 0;
+  top: 38%;
+  width: 140px;
+  height: 180px;
+  background: linear-gradient(to left, rgba(11, 15, 20, 0.96) 0%, rgba(11, 15, 20, 0.8) 55%, rgba(11, 15, 20, 0) 100%);
+}
+
+/* ---------- joystick ---------- */
+
+.joystick {
+  position: absolute;
+  left: 50%;
+  bottom: max(30px, calc(env(safe-area-inset-bottom) + 24px));
+  transform: translateX(-50%);
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
+  z-index: 22;
+  touch-action: none;
+  cursor: grab;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.09), rgba(11, 15, 20, 0.55) 72%);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+}
+.joystick.active { cursor: grabbing; border-color: var(--accent); }
+.joystick-cross::before, .joystick-cross::after {
+  content: "";
+  position: absolute;
+  left: 50%; top: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  transform: translate(-50%, -50%);
+}
+.joystick-cross::before { width: 62px; height: 1px; }
+.joystick-cross::after { width: 1px; height: 62px; }
+.joystick-knob {
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--accent);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 4px 18px rgba(255, 148, 54, 0.45);
+  transition: transform 0.08s ease-out;
+}
+.joystick.active .joystick-knob { transition: none; }
 
 /* ---------- top bar ---------- */
 
@@ -136,7 +187,7 @@ body { overscroll-behavior: none; }
 .hint {
   position: absolute;
   left: 50%;
-  bottom: max(22px, calc(env(safe-area-inset-bottom) + 16px));
+  bottom: max(158px, calc(env(safe-area-inset-bottom) + 150px));
   transform: translateX(-50%);
   margin: 0;
   z-index: 20;
@@ -185,4 +236,32 @@ body { overscroll-behavior: none; }
 @media (min-width: 700px) {
   .topbar { padding-left: 24px; padding-right: 24px; }
   .hint { font-size: 12px; }
+}
+
+/* Landscape phones: compact chrome, joystick parked in the corner. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .topbar { padding: 8px 12px; gap: 9px; }
+  .safe-top { padding-top: max(8px, env(safe-area-inset-top)); }
+  .brand-name { font-size: 14px; }
+  .location-area { font-size: 9px; }
+  .location-spot { font-size: 12px; }
+  .icon-btn { width: 34px; height: 34px; }
+  .icon-btn svg { width: 16px; height: 16px; }
+
+  .joystick {
+    left: 14px;
+    bottom: max(12px, calc(env(safe-area-inset-bottom) + 8px));
+    transform: none;
+    width: 88px;
+    height: 88px;
+  }
+  .joystick-cross::before { width: 46px; }
+  .joystick-cross::after { height: 46px; }
+  .joystick-knob { width: 36px; height: 36px; }
+
+  .hint { display: none; }
+  .clean .clean-cover-top { width: 200px; height: 70px; }
+  .clean .clean-cover-side { width: 105px; height: 130px; top: 32%; }
+  .clean .clean-cover::before { width: 100px; height: 42px; }
+  .clean .clean-cover::after { width: 180px; height: 42px; }
 }

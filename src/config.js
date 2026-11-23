@@ -7,6 +7,7 @@
 export const CONFIG = {
   label: 'BHP School',
   region: 'Satrod Kalan Rd, Hisar, Haryana',
+  visitor: 'Dheeraj Bhai',
   view: {
     lat: 29.11069827,
     lng: 75.8149245,

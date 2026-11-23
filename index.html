@@ -6,8 +6,8 @@
     <meta name="theme-color" content="#0b0f14" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="description" content="streed3d — Google Street View embedded as a pure 3D panorama. No 2D map. Made for phones." />
-    <title>streed3d</title>
+    <meta name="description" content="dheeraj bhai — BHP School, Satrod. Google Street View in pure 3D panorama mode. No 2D map." />
+    <title>dheeraj bhai · BHP School</title>
   </head>
   <body>
     <div id="app">
@@ -21,12 +21,15 @@
       ></iframe>
 
       <!-- Optional cosmetic cover for Google's corner branding (see CONFIG.cleanMode). -->
-      <div class="clean-cover" aria-hidden="true"><span class="clean-cover-top"></span></div>
+      <div class="clean-cover" aria-hidden="true">
+        <span class="clean-cover-top"></span>
+        <span class="clean-cover-side"></span>
+      </div>
 
       <header class="topbar safe-top">
         <div class="brand">
           <span class="brand-mark" aria-hidden="true"></span>
-          <span class="brand-name">streed<span>3d</span></span>
+          <span class="brand-name">dheeraj <span>bhai</span></span>
         </div>
         <div class="location">
           <span class="location-area" id="area-name">—</span>
@@ -37,7 +40,12 @@
         </button>
       </header>
 
-      <p class="hint safe-bottom" id="hint">Drag to look around · Tap arrows to move</p>
+      <p class="hint safe-bottom" id="hint">Joystick: left/right to look · up/down to move</p>
+
+      <div class="joystick" id="joystick" role="application" aria-label="Move and look joystick">
+        <span class="joystick-cross" aria-hidden="true"></span>
+        <span class="joystick-knob" id="joystick-knob" aria-hidden="true"></span>
+      </div>
 
       <div class="overlay" id="overlay">
         <div class="loader" aria-hidden="true"><span></span><span></span><span></span></div>
