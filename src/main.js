@@ -5,7 +5,6 @@ const $ = (id) => document.getElementById(id);
 const frame = $('sv-frame');
 const overlay = $('overlay');
 const overlayText = $('overlay-text');
-const areaName = $('area-name');
 const spotName = $('spot-name');
 const hint = $('hint');
 const joystick = $('joystick');
@@ -13,6 +12,9 @@ const knob = $('joystick-knob');
 
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 const RADIUS = 34; // joystick travel in CSS pixels
+const MAX_TURN = 8; // degrees at full stick deflection
+const MAX_TILT = 4; // degrees at full stick deflection
+const MAX_STEP = 6; // metres at full stick deflection
 
 function startView() {
   const q = new URLSearchParams(location.search);
@@ -28,9 +30,12 @@ const current = startView();
 let firstLoad = true;
 let stickActive = false;
 let lastApply = 0;
+let stickBase = null;
+let stickNx = 0;
+let stickNy = 0;
+let repeatTimer = null;
 
 document.body.classList.toggle('clean', Boolean(CONFIG.cleanMode));
-areaName.textContent = `${CONFIG.label} · ${CONFIG.region}`;
 spotName.textContent = CONFIG.visitor;
 spotName.title = `${current.lat.toFixed(5)}, ${current.lng.toFixed(5)}`;
 hint.textContent = 'Joystick: left/right to look · up/down to move';
@@ -40,18 +45,33 @@ function applyView() {
   frame.src = embedUrl(current);
 }
 
-function moveFromStick(nx, ny) {
-  // Horizontal = turn, vertical = move forward/back along the heading.
-  current.heading = (current.heading + nx * 7 + 360) % 360;
-  current.pitch = clamp(current.pitch - ny * 3, -80, 80);
+function advance(meters, heading) {
+  const h = (heading * Math.PI) / 180;
+  const latRad = (current.lat * Math.PI) / 180;
+  current.lat += (meters * Math.cos(h)) / 111320;
+  current.lng += (meters * Math.sin(h)) / (111320 * Math.max(0.2, Math.cos(latRad)));
+}
 
-  if (Math.abs(ny) > 0.5) {
-    const meters = -ny * 8; // stick up = walk forward
-    const h = (current.heading * Math.PI) / 180;
-    const latRad = (current.lat * Math.PI) / 180;
-    current.lat += (meters * Math.cos(h)) / 111320;
-    current.lng += (meters * Math.sin(h)) / (111320 * Math.max(0.2, Math.cos(latRad)));
-  }
+// Absolute mapping: full deflection = a fixed small turn/move, no matter how
+// many pointermove events the browser fires. This keeps the stick gentle.
+function setFromStick(nx, ny) {
+  current.heading = (stickBase.heading + nx * MAX_TURN + 360) % 360;
+  current.pitch = clamp(stickBase.pitch - ny * MAX_TILT, -80, 80);
+
+  const meters = -ny * MAX_STEP; // stick up = walk forward
+  const h = (current.heading * Math.PI) / 180;
+  const latRad = (stickBase.lat * Math.PI) / 180;
+  current.lat = stickBase.lat + (meters * Math.cos(h)) / 111320;
+  current.lng = stickBase.lng + (meters * Math.sin(h)) / (111320 * Math.max(0.2, Math.cos(latRad)));
+}
+
+function repeatStep() {
+  if (!stickActive) return;
+  stickBase = { ...current };
+  current.heading = (current.heading + stickNx * 1.2 + 360) % 360;
+  current.pitch = clamp(current.pitch - stickNy * 0.6, -80, 80);
+  advance(-stickNy * 2, current.heading);
+  applyView();
 }
 
 function updateStick(e) {
@@ -63,11 +83,13 @@ function updateStick(e) {
     dx *= RADIUS / dist;
     dy *= RADIUS / dist;
   }
+  stickNx = dx / RADIUS;
+  stickNy = dy / RADIUS;
   knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
-  moveFromStick(dx / RADIUS, dy / RADIUS);
+  setFromStick(stickNx, stickNy);
 
   const now = performance.now();
-  if (now - lastApply > 700) {
+  if (now - lastApply > 900) {
     lastApply = now;
     applyView();
   }
@@ -77,8 +99,12 @@ joystick.addEventListener('pointerdown', (e) => {
   e.preventDefault();
   joystick.setPointerCapture(e.pointerId);
   stickActive = true;
+  stickBase = { ...current };
+  stickNx = 0;
+  stickNy = 0;
   lastApply = performance.now();
   joystick.classList.add('active');
+  repeatTimer = setInterval(repeatStep, 900);
 });
 
 joystick.addEventListener('pointermove', (e) => {
@@ -88,6 +114,8 @@ joystick.addEventListener('pointermove', (e) => {
 function releaseStick() {
   if (!stickActive) return;
   stickActive = false;
+  clearInterval(repeatTimer);
+  repeatTimer = null;
   joystick.classList.remove('active');
   knob.style.transform = 'translate(-50%, -50%)';
   applyView();
