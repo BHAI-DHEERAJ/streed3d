@@ -22,23 +22,26 @@ Edit [`src/config.js`](src/config.js):
 
 ```js
 export const CONFIG = {
-  label: 'BHP Vidya Mandir',
-  region: 'Satrod Khurd, Hisar, Haryana',
+  label: 'BHP School',
+  region: 'Satrod Kalan Rd, Hisar, Haryana',
   view: {
-    lat: 29.1293,
-    lng: 75.78386,
-    heading: 0,
-    pitch: 0,
+    lat: 29.11069827,
+    lng: 75.8149245,
+    heading: 194.50165329,
+    pitch: -4.36154057,
     zoom: 1,
   },
   cleanMode: true,
 };
 ```
 
+This matches the Google Earth viewpoint `29.11069827, 75.8149245`,
+heading `194.5°`, tilt `85.64°` (≈ `-4.36°` Street View pitch).
+
 Or deep-link any viewpoint:
 
 ```
-https://<your-site>/?lat=29.1293&lng=75.78386&heading=0&pitch=0&zoom=1
+https://<your-site>/?lat=29.11069827&lng=75.8149245&heading=194.5&pitch=-4.36&zoom=1
 ```
 
 ### About `cleanMode`

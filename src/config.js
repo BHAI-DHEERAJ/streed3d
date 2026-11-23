@@ -2,16 +2,16 @@
  * The area you drop into on open. Google renders the actual 360° Street View
  * imagery inside the iframe — this app never draws a map or a 2D view.
  *
- * Override per link with: ?lat=29.1293&lng=75.78386&heading=0&pitch=0&zoom=1
+ * Override per link with: ?lat=29.11069827&lng=75.8149245&heading=194.5&pitch=-4.36&zoom=1
  */
 export const CONFIG = {
-  label: 'BHP Vidya Mandir',
-  region: 'Satrod Khurd, Hisar, Haryana',
+  label: 'BHP School',
+  region: 'Satrod Kalan Rd, Hisar, Haryana',
   view: {
-    lat: 29.1293,
-    lng: 75.78386,
-    heading: 0,
-    pitch: 0,
+    lat: 29.11069827,
+    lng: 75.8149245,
+    heading: 194.50165329,
+    pitch: -4.36154057,
     zoom: 1,
   },
 
