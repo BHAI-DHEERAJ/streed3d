@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0f14" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="description" content="streed3d — Google Street View in pure 3D panorama mode. Made for phones." />
+    <title>streed3d</title>
+  </head>
+  <body>
+    <div id="app">
+      <!-- Google Street View panorama renders here. No Map object is ever created. -->
+      <div id="viewport" aria-label="3D Street View panorama"></div>
+
+      <header class="topbar safe-top">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span class="brand-name">streed<span>3d</span></span>
+        </div>
+        <div class="location">
+          <span class="location-area" id="area-name">—</span>
+          <span class="location-spot" id="spot-name">Loading…</span>
+        </div>
+        <button class="icon-btn" id="fullscreen-btn" type="button" aria-label="Toggle fullscreen" title="Fullscreen">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>
+        </button>
+      </header>
+
+      <div class="reticle" aria-hidden="true"><span></span></div>
+
+      <div class="compass safe-bottom" aria-label="View heading">
+        <div class="compass-dial" id="compass-dial">
+          <span class="tick n">N</span><span class="tick e">E</span>
+          <span class="tick s">S</span><span class="tick w">W</span>
+        </div>
+        <div class="compass-needle" aria-hidden="true"></div>
+        <span class="compass-value" id="compass-value">0°</span>
+      </div>
+
+      <div class="controls safe-bottom">
+        <button class="ctrl-btn" id="motion-btn" type="button" aria-label="Toggle phone motion">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18.5h2"/></svg>
+          <span>Motion</span>
+        </button>
+        <button class="ctrl-btn" id="recenter-btn" type="button" aria-label="Recenter view">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+          <span>Center</span>
+        </button>
+      </div>
+
+      <p class="hint safe-bottom" id="hint">Drag to look around · Tap arrows to move</p>
+
+      <div class="overlay" id="overlay">
+        <div class="overlay-view" id="loading-view">
+          <div class="loader" aria-hidden="true"><span></span><span></span><span></span></div>
+          <span class="overlay-text" id="overlay-text">Entering Street View…</span>
+        </div>
+        <div class="overlay-view setup-view hidden" id="setup-view">
+          <div class="brand-mark big" aria-hidden="true"></div>
+          <h1>streed<span>3d</span></h1>
+          <p id="setup-text">Add your Google Maps JavaScript API key to enter the area.</p>
+          <code>VITE_GOOGLE_MAPS_API_KEY=YOUR_KEY</code>
+          <small>Put it in <b>.env.local</b> and restart, or add it as a GitHub repo secret.</small>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
