@@ -20,6 +20,7 @@ function startView() {
 }
 
 const view = startView();
+document.body.classList.toggle('clean', Boolean(CONFIG.cleanMode));
 areaName.textContent = `${CONFIG.label} · ${CONFIG.region}`;
 spotName.textContent = `${view.lat.toFixed(4)}, ${view.lng.toFixed(4)}`;
 hint.textContent = matchMedia('(pointer: coarse)').matches

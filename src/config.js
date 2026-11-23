@@ -2,18 +2,22 @@
  * The area you drop into on open. Google renders the actual 360° Street View
  * imagery inside the iframe — this app never draws a map or a 2D view.
  *
- * Override per link with: ?lat=40.7580&lng=-73.9855&heading=30&pitch=0&zoom=1
+ * Override per link with: ?lat=29.1293&lng=75.78386&heading=0&pitch=0&zoom=1
  */
 export const CONFIG = {
-  label: 'Times Square',
-  region: 'Manhattan, New York',
+  label: 'BHP Vidya Mandir',
+  region: 'Satrod Khurd, Hisar, Haryana',
   view: {
-    lat: 40.758,
-    lng: -73.9855,
-    heading: 30,
+    lat: 29.1293,
+    lng: 75.78386,
+    heading: 0,
     pitch: 0,
     zoom: 1,
   },
+
+  // Cosmetic corner cover over Google's logo/attribution in the embed.
+  // NOTE: Google's terms require this attribution to stay visible — see README.
+  cleanMode: true,
 };
 
 /**

@@ -22,23 +22,34 @@ Edit [`src/config.js`](src/config.js):
 
 ```js
 export const CONFIG = {
-  label: 'Times Square',
-  region: 'Manhattan, New York',
+  label: 'BHP Vidya Mandir',
+  region: 'Satrod Khurd, Hisar, Haryana',
   view: {
-    lat: 40.758,
-    lng: -73.9855,
-    heading: 30,
+    lat: 29.1293,
+    lng: 75.78386,
+    heading: 0,
     pitch: 0,
     zoom: 1,
   },
+  cleanMode: true,
 };
 ```
 
 Or deep-link any viewpoint:
 
 ```
-https://<your-site>/?lat=40.7580&lng=-73.9855&heading=30&pitch=0&zoom=1
+https://<your-site>/?lat=29.1293&lng=75.78386&heading=0&pitch=0&zoom=1
 ```
+
+### About `cleanMode`
+
+The Google logo and "map data" attribution are drawn **inside Google's own
+iframe**, so they cannot be removed with our CSS or JS. `cleanMode: true` simply
+places a dark gradient over the two bottom corners so they aren't visible.
+
+**Warning:** Google's Maps Platform terms require that attribution to remain
+visible. This cover is cosmetic and may put the embed in breach of those terms;
+set `cleanMode: false` to disable it.
 
 ## Controls
 

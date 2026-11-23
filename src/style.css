@@ -34,6 +34,34 @@ body { overscroll-behavior: none; }
   background: #0b0f14;
 }
 
+/* Optional cover over the embed's bottom-corner branding. */
+.clean-cover { display: none; }
+.clean .clean-cover {
+  display: block;
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 56px;
+  z-index: 10;
+  pointer-events: none;
+}
+.clean .clean-cover::before,
+.clean .clean-cover::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  height: 56px;
+}
+.clean .clean-cover::before {
+  left: 0;
+  width: 130px;
+  background: linear-gradient(to right, rgba(11, 15, 20, 0.97) 0%, rgba(11, 15, 20, 0.86) 62%, rgba(11, 15, 20, 0) 100%);
+}
+.clean .clean-cover::after {
+  right: 0;
+  width: 240px;
+  background: linear-gradient(to left, rgba(11, 15, 20, 0.97) 0%, rgba(11, 15, 20, 0.86) 68%, rgba(11, 15, 20, 0) 100%);
+}
+
 /* ---------- top bar ---------- */
 
 .topbar {
