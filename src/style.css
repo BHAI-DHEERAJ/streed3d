@@ -64,8 +64,8 @@ body { overscroll-behavior: none; }
   position: absolute;
   left: 0;
   top: 0;
-  width: 210px;
-  height: 92px;
+  width: 270px;
+  height: 130px;
   background: linear-gradient(to bottom right, rgba(11, 15, 20, 0.98) 0%, rgba(11, 15, 20, 0.9) 58%, rgba(11, 15, 20, 0) 100%);
 }
 
