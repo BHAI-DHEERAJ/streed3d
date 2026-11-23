@@ -1,30 +1,20 @@
 # streed3d
 
-**Google Street View in pure 3D panorama mode.** It drops you straight into a
-specific area on load. No 2D map, no map view, no flat thumbnails — only the
-360° Street View panorama, tuned for phones.
+Google Street View in a **fullscreen webview**. It opens directly in a 360°
+panorama at a chosen spot — no 2D map view, no map UI, no API key required.
 
-Built with the official **Google Maps JavaScript API** `StreetViewPanorama`.
-A `google.maps.Map` is never created, so there is no map UI at all.
+The app is just a phone-first shell around Google's own Street View embed
+(`https://www.google.com/maps/embed?...`), rendered in an `<iframe>` that fills
+the screen.
 
 ## Run locally
 
-1. Get a Google Maps **JavaScript API key** (billing must be enabled on the
-   Google Cloud project, and the Maps JavaScript API enabled).
-2. Copy `.env.example` to `.env.local` and paste your key:
+```bash
+npm install
+npm run dev
+```
 
-   ```bash
-   VITE_GOOGLE_MAPS_API_KEY=AIza...your_key...
-   ```
-
-3. Install and run:
-
-   ```bash
-   npm install
-   npm run dev
-   ```
-
-Open the printed URL on your phone (same Wi‑Fi) to test touch + motion.
+Build a static site with `npm run build` (output in `dist/`).
 
 ## Change the starting area
 
@@ -34,44 +24,40 @@ Edit [`src/config.js`](src/config.js):
 export const CONFIG = {
   label: 'Times Square',
   region: 'Manhattan, New York',
-  start: {
+  view: {
     lat: 40.758,
     lng: -73.9855,
-    heading: 30,   // compass direction
-    pitch: 0,      // look up/down
-    zoom: 1,       // Street View zoom level
+    heading: 30,
+    pitch: 0,
+    zoom: 1,
   },
 };
 ```
 
-You can also deep-link to any viewpoint:
+Or deep-link any viewpoint:
 
 ```
-https://<your-site>/?lat=40.7580&lng=-73.9855&heading=30&pitch=0
+https://<your-site>/?lat=40.7580&lng=-73.9855&heading=30&pitch=0&zoom=1
 ```
 
-## Phone controls
+## Controls
 
-- **Drag** to look around, **pinch / scroll** to zoom
-- **Google's arrows** on the imagery move you to the next panorama
-- **Motion** button turns on gyroscope tracking (requests permission on iOS)
-- **Center** resets to the configured heading
-- Compass shows the current heading
+Everything inside the frame is Google's Street View UI: drag/swipe to look
+around, pinch/scroll to zoom, and tap the on-image arrows to walk to the next
+panorama. The thin header only shows the place name and a fullscreen button.
 
 ## Deploy to GitHub Pages
 
-The included [workflow](.github/workflows/deploy.yml) builds and publishes on
-every push to `main`.
+The included [workflow](.github/workflows/deploy.yml) builds and publishes the
+site on every push to `main`.
 
-1. In the GitHub repo: **Settings → Pages → Source → GitHub Actions**
-2. **Settings → Secrets and variables → Actions → New repository secret**
-   - Name: `VITE_GOOGLE_MAPS_API_KEY`
-   - Value: your Google Maps JavaScript API key
-3. Push to `main`. The site appears at `https://<user>.github.io/streed3d/`.
+1. Repo **Settings → Pages → Source → GitHub Actions**
+2. Push to `main`
+3. Site: `https://<user>.github.io/streed3d/`
 
-Restrict the key's **Website referrers** to your GitHub Pages URL in Google
-Cloud to prevent abuse.
+No secrets or API keys are needed.
 
 ## Tech
 
-Vanilla JS + Google Maps JavaScript API + Vite. No UI framework, no map library.
+Vanilla JS + Vite + a Google Maps embed iframe. No UI framework, no Maps API
+key, no custom panorama renderer.
